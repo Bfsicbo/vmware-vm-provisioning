@@ -1,0 +1,30 @@
+---
+- name: vm provisiong in vmware
+  hosts: localhost
+  tasks:
+    - name: create a virtal machine in vmware
+      community.vmware.vmware_guest:
+        hostname: "{{ _hostname_ }}"
+        username: "{{ _username_ }}"
+        password: "{{ _password_ }}"
+        validate_certs: false
+        datacenter: "{{ _datacenter_ }}"
+        folder: "{{ _folder_ }}"
+        name: "{{ _name_ }}"
+        state: poweredon
+        guest_id: centos64Guest
+        esxi_hostname: "{{ _esxi_hostname_ }}"
+        disk:
+          - size_gb: "{{ disk }}"
+            type: thin
+            datastore: "{{ datastore_name }}"
+        hardware:
+          memory_mb: "{{ memory }}"
+          num_cpus: "{{ cpu }}"
+          scsi: paravirtual
+        networks:
+          - name: VM Network
+            mac: "{{ mac_address }}"
+            ip: "{{ ip_address }}"
+            netmask: "{{ netmask }}"
+            device_type: v
